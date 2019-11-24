@@ -24,7 +24,6 @@ returnObject.obtainInformation = function (entitySlug, entityInformationSlug) {
         reject(err);
       });
     } else {
-      console.log('NOT ALLOWED');
       models.entities.entity_information.findOne({
         include:
           [

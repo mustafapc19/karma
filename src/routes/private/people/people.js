@@ -37,7 +37,6 @@ router.get('/', (req, res) => {
 
 
 router.post('/details', (req, res) => {
-  console.log(req);
   methods.People.peopleMethods.getPeople(req.body)
     .then((classes) => {
       res.json({

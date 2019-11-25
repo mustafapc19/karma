@@ -9,11 +9,11 @@ const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
 const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
 const dateTime = `${date} ${time}`;
 
-router.get('/:faculty_id/:course_id', (req, res) => {
+router.get('/:course_id', (req, res) => {
   // res.send(200);
   const data = {};
 
-  data.faculty_id = req.params.faculty_id;
+  data.faculty_id = req.body.id;
   data.course_id = req.params.course_id;
 
   methods.students.AttendanceData.getAttendance(data)
@@ -35,6 +35,7 @@ router.get('/:faculty_id/:course_id', (req, res) => {
 router.post('/student', (req, res) => {
   const data = {};
   data.people_id = req.body.id;
+  console.log("TEST");
 
   methods.students.AttendanceData.getAttendanceSingle(data)
     .then((classes) => {
@@ -80,11 +81,12 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/:people_id/:course_id', (req, res) => {
+router.put('/:roll_no/:course_id', (req, res) => {
   const data = {};
 
-  data.people_id = req.params.people_id;
+  data.student_id = req.params.roll_no;
   data.course_id = req.params.course_id;
+  data.faculty_id = req.body.id;
 
   const info = {};
 
@@ -94,7 +96,6 @@ router.put('/:people_id/:course_id', (req, res) => {
   info.value = req.body.value;
 
   // This will be changed in future updates if required for dateTime to be sent from front end
-
   // }
   methods.students.AttendanceData.updateAttendance(info, data)
     .then((updated) => {

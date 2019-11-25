@@ -19,12 +19,6 @@ classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
     where: {
         people_id: info.id,
     },
-    include: [
-      {
-        models: model.academics.courses_offered,
-        required: true
-      }
-    ]
   }).then((courses) => {
     resolve(courses);
   }).catch((err) => {

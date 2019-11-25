@@ -13,6 +13,19 @@ classEnrollmentActivity
       });
   });
 
+
+classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
+  models.student.student_course_enrolment_activity.findAll({
+    where: {
+        people_id: info.id,
+    },
+  }).then((courses) => {
+    resolve(courses);
+  }).catch((err) => {
+    reject(err);
+  })
+}) 
+  
 classEnrollmentActivity
   .updateActivity = (info, data) => new Promise((resolve, reject) => {
     models.student.student_course_enrolment_activity.update(info, {

@@ -27,7 +27,6 @@ peopleMethods.getAllPeople = () => new Promise((resolve, reject) => {
 
 
 peopleMethods.getPeople = data => new Promise((resolve, reject) => {
-  console.log(data);
   models.people.people.findOne({
     where: {
       id: data.id,

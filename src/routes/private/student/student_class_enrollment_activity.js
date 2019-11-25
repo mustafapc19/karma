@@ -3,9 +3,22 @@ const express = require('express');
 const router = express.Router();
 const methods = require('data/methods');
 
-router.get('/', (req, res) => {
-  res.send(200);
-});
+
+router.get('/', (req,res) => {
+  methods.students.ClassEnrollmentActivity.getActivity({ id : req.body.id})
+    .then((model) => {
+      res.status(200).json({
+        message: 'success',
+        courses: model,
+      })
+    })
+      .catch((err) => {
+        res.status(500).json({
+          message: 'error',
+          err
+        })
+      });
+})
 
 router.post('/', (req, res) => {
   const info = {};

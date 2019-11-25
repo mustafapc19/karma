@@ -26,6 +26,15 @@ classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
   })
 }) 
   
+classEnrollmentActivity.getAllActivity = () => new Promise((resolve,reject) => {
+  models.student.student_course_enrolment_activity.findAll()
+  .then((courses) => {
+    resolve(courses);
+  }).catch((err) => {
+    reject(err);
+  })
+}) 
+
 classEnrollmentActivity
   .updateActivity = (info, data) => new Promise((resolve, reject) => {
     models.student.student_course_enrolment_activity.update(info, {

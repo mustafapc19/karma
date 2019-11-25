@@ -37,19 +37,34 @@ router.get('/', (req, res) => {
 });
 
 router.get('/student', (req,res) => {
-  methods.students.ClassEnrollmentActivity.getActivity({ id : req.body.id })
+  methods.students.ClassEnrollmentActivity.getAllActivity()
     .then((model) => {
       res.status(200).json({
         message: 'success',
         courses: model,
       })
+    })
       .catch((err) => {
         res.status(500).json({
           message: 'error',
           err
         })
+      });
+})
+
+router.get('/faculty', (req,res) => {
+  methods.Faculty.facultyEAMethods.getAllFacultyAcademicEnrolmentActivity()
+    .then((model) => {
+      res.status(200).json({
+        message: 'success',
+        courses: model,
       })
-    });
+    }).catch((err) => {
+        res.status(500).json({
+          message: 'error',
+          err
+        })
+      });
 })
 
 router.get('/:course_id', (req, res) => {

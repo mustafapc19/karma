@@ -34,7 +34,7 @@ router.post('/', celebrate({
     if (Object.prototype.hasOwnProperty.call(req.body, 'password')) {
       Authenticate(req.body.email, req.body.password, req.body.firstname, req.body.middlename, req.body.lastname, req.body.gender, req.body.nationality, req.body.dob)
         .then((result) => {
-          console.log(result);
+          // console.log(result);
           res.status(200).json({
             status: 200,
           });

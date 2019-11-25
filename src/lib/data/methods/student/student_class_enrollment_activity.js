@@ -14,23 +14,18 @@ classEnrollmentActivity
   });
 
 
-classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
+/*classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
   models.student.student_course_enrolment_activity.findAll({
     where: {
         people_id: info.id,
-    },
-    include: [
-      {
-        models: model.academics.courses_offered,
-        required: true
-      }
-    ]
+    }
   }).then((courses) => {
+    models.faculty.faculty_academic_enrolment_activity
     resolve(courses);
   }).catch((err) => {
     reject(err);
   })
-}) 
+}) */
   
 classEnrollmentActivity.getAllActivity = () => new Promise((resolve,reject) => {
   models.student.student_course_enrolment_activity.findAll()

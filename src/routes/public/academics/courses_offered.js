@@ -36,6 +36,21 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/student', (req,res) => {
+  methods.students.ClassEnrollmentActivity.getActivity({ id : req.body.id })
+    .then((model) => {
+      res.status(200).json({
+        message: 'success',
+        courses: model,
+      })
+      .catch((err) => {
+        res.status(500).json({
+          message: 'error',
+          err
+        })
+      })
+    });
+})
 
 router.get('/:course_id', (req, res) => {
   const data = {};

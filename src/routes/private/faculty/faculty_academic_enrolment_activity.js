@@ -5,7 +5,7 @@ const methods = require('data/methods');
 
 router.get('/', (req, res) => {
   console.log('inside faculty activity');
-  methods.Faculty.facultyEAMethods.getAllFacultyAcademicEnrolmentActivity()
+  methods.Faculty.facultyEAMethods.getFacultyAcademicEnrolmentActivity({id : req.body.id})
     .then((classes) => {
       console.log('people');
       res.json({

@@ -14,18 +14,30 @@ classEnrollmentActivity
   });
 
 
-/*classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
-  models.student.student_course_enrolment_activity.findAll({
-    where: {
-        people_id: info.id,
-    }
-  }).then((courses) => {
+// classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
+//   models.student.student_course_enrolment_activity.findAll({
+//     where: {
+//         people_id: info.id,
+//     }
+//   }).then((courses) => {
+//     models.facuSELECT * FROM student_attendance_data, people, courses_offered where courses_offered.id=student_attendance_data.course_id AND people.id=student_attendance_data.faculty_idlty.faculty_academic_enrolment_activity
+//     resolve(courses);
+//   }).catch((err) => {
+//     reject(err);
+//   })
+// }) 
+
+classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
+    // FIXME: Change this to sequelize
+  models.sequelize.query(`SELECT * FROM courses_offered, student_course_enrolment_activity WHERE student_course_enrolment_activity.people_id=${info.id} AND courses_offered.id=student_course_enrolment_activity.course_id;`)
+  .then((courses) => {
     models.faculty.faculty_academic_enrolment_activity
     resolve(courses);
   }).catch((err) => {
+    console.log(err);
     reject(err);
   })
-}) */
+}) 
   
 classEnrollmentActivity.getAllActivity = () => new Promise((resolve,reject) => {
   models.student.student_course_enrolment_activity.findAll()

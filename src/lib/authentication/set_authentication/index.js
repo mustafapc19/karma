@@ -7,9 +7,68 @@ const today = new Date();
 const date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
 const dateTime = `${date} ${time}`;
-let id = 0;
+// let id = 0;
 
 
+
+const setAuthentication = (userID, password, firstname, middlename, lastname, gender, nationality, dob) => {
+  return new Promise((resolve,reject) => {
+    bcrypt.hash(password,saltRound).then((hash) => {
+      models.people.people.create({
+        first_name : firstname,
+        middle_name: middlename,
+        last_name: lastname,
+        gender: gender,
+        nationality: nationality,
+        date_of_birth: dob
+      }).then((peopleDoc) => {
+        if(peopleDoc){
+          models.people.people_information.create({
+            people_id : peopleDoc.id,
+            slug_id: 1,
+            data: userID,
+            created_at: dateTime,
+            updated_at: dateTime
+          }).then((people_informationDoc) => {
+          if(people_informationDoc){ 
+             models.authentication.authentication_information_local.create({
+              people_id: people_informationDoc.people_id,
+              password_hash : hash,
+              created_at: dateTime,
+              updated_at: dateTime
+            }).then((authentication_information_localDoc) => {
+              if(authentication_information_localDoc){
+                resolve(authentication_information_localDoc);
+              } else {
+                reject("Couldnt Insert");
+              }
+            })
+            .catch((err) => {
+              reject(err);
+            })
+            } else {
+              reject("Couldnt insert");
+            }
+          })
+          .catch((err) => {
+            reject(err);
+          });
+        } else {
+          reject("Couldnt Insert");
+        }
+      }).catch((err) => {
+        reject(err);
+      })
+    })
+    .catch((err) => {
+      resolve(err);
+    })
+  })
+} 
+
+module.exports = setAuthentication;
+
+/*
 const setAuthentication = function (userID, password, firstname, middlename, lastname, gender, nationality, dob) {
   // parameters to argon2 hashing function (strictly for password.length >= 12)
   // added safety factor 256
@@ -58,11 +117,7 @@ const setAuthentication = function (userID, password, firstname, middlename, las
       console.log(err);
     });
   }));
-};
-
-module.exports = setAuthentication;
-
-
+};*/
 // const Promise = require('bluebird');
 // const argon2 = require('argon2');
 

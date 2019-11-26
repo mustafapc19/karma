@@ -14,18 +14,47 @@ classEnrollmentActivity
   });
 
 
-/*classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
+classEnrollmentActivity.getActivity = info => new Promise((resolve,reject) => {
   models.student.student_course_enrolment_activity.findAll({
     where: {
         people_id: info.id,
-    }
-  }).then((courses) => {
-    models.faculty.faculty_academic_enrolment_activity
-    resolve(courses);
-  }).catch((err) => {
+    },
+    include: [
+      {
+        model: models.academics.courses_offered
+        // include: [
+        //   {
+        //     model: models.faculty.faculty_academic_enrolment_activity,
+        //     include: [
+        //       {
+        //         model: models.people.people
+        //       }
+        //     ]
+        //   }
+        // ]
+      }
+    ]
+  })
+  .then((studentceas) => {
+    let resObj = {};
+    studentceas.map(studentcea => {
+          resObj.activity = studentcea.activity;
+          console.log("!!!!!!!!!!!!!!)))))))))))))",studentcea.courses_offered)
+          // studentcea.courses_offered.map(cour => {
+          //   resObj.na = cour.name;
+          // })
+          resObj.official_courses_id = studentcea.courses_offered.official_course_id;
+          resObj.name = studentcea.courses_offered.name;
+          })
+        
+    // console.log("!!!!",resObj);
+    resolve(resObj);
+  })
+  .catch((err) => {
+    console.log(err);
     reject(err);
   })
-}) */
+}) 
   
 classEnrollmentActivity.getAllActivity = () => new Promise((resolve,reject) => {
   models.student.student_course_enrolment_activity.findAll()

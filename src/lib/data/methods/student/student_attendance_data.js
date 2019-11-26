@@ -60,13 +60,20 @@ attendanceDataMethods
     }).then((doc) => {
       switch(info.value){
         case 0: {
+          // console.log("DOC.value",doc.value," ",doc.max_value);
           info.value = doc.value;
-          info.max_value = doc.max_value + 1;
+          
+          if(info.value > info.max_value + doc.max_value){
+            info.max_value = doc.max_value;
+            reject(0);
+          } else {
+            info.max_value = doc.max_value + info.max_value;
+          }
           break;
         }
         default: {
-          info.value = doc.value + info.value;
           info.max_value = doc.max_value + info.value;
+          info.value = doc.value + info.value;
           break; 
         }
       }

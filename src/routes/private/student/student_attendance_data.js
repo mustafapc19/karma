@@ -35,7 +35,7 @@ router.get('/:course_id', (req, res) => {
 router.post('/student', (req, res) => {
   const data = {};
   data.people_id = req.body.id;
-  console.log("TEST");
+  // console.log("TEST");
 
   methods.students.AttendanceData.getAttendanceSingle(data)
     .then((classes) => {
@@ -59,13 +59,15 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
   const info = {};
-  console.log(req);
+  // console.log("@@@@@@@@@@@@@@",req.body);
   info.student_id = req.body.studentId;
   info.course_id = req.body.courseId;
   info.faculty_id = req.body.facultyId;
   info.start_date_time = req.body.startDateTime;
   info.end_date_time = req.body.endDateTime;
   info.value = req.body.value;
+  info.max_value = req.body.max_value;
+  info.people_id = req.body.peopleId;
   methods.students.AttendanceData.addAttendance(info)
     .then((created) => {
       res.json({
@@ -81,7 +83,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/:roll_no/:course_id', (req, res) => {
+router.put('/:roll_no/:course_id/', (req, res) => {
   const data = {};
 
   data.student_id = req.params.roll_no;
@@ -94,6 +96,7 @@ router.put('/:roll_no/:course_id', (req, res) => {
   //   .prototype.hasOwnProperty.call(req.body, 'activity')) {
   info.date_time = dateTime;
   info.value = req.body.value;
+  info.max_value = req.body.max_value;
 
   // This will be changed in future updates if required for dateTime to be sent from front end
   // }

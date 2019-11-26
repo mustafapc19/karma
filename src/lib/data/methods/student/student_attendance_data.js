@@ -32,11 +32,14 @@ attendanceDataMethods
 attendanceDataMethods
   .getAttendanceSingle = data => new Promise((resolve, reject) => {
     console.log(data);
-    models.student.student_attendance_data.findAll({
-      where: {
-        people_id: data.people_id,
-      },
-    }).then((courses) => {
+    // models.student.student_attendance_data.findAll({
+    //   where: {
+    //     people_id: data.people_id,
+    //   },
+    // })
+    // FIXME: Change this to sequelize
+    models.sequelize.query(`SELECT * FROM student_attendance_data, people, courses_offered where courses_offered.id=student_attendance_data.course_id AND people.id=student_attendance_data.faculty_id AND student_attendance_data.people_id=${data.people_id}`)
+  .then((courses) => {
       resolve(courses);
     })
       .catch((err) => {
